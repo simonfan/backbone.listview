@@ -29,10 +29,13 @@ define(['backbone'], function(Backbone) {
 				// if there is an itemData function set, use it. Otherwise just use the model's attributes.
 			var itemData = (typeof this.itemData === 'function') ? this.itemData(model) : model.attributes,
 				// render thumbnail
-				thumb = this.itemTemplate(tpl_data);
+				thumb = this.itemTemplate(itemData);
 
 			// append the render result to the list.
-			this.$el.append(thumb);
+			$(thumb).appendTo(this.$el);
+
+			// trigger the 'add' event on the view, so that outer code may build stuff on the thumbnail.
+			this.trigger('add', thumb);
 		},
 
 		// handles reset events on the collection

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>QUnit tests</title>
+	
+	<link rel="stylesheet" href="components/qunit/qunit.css">
+
+	<!-- Set a script tag to define unit as FALSE, so that the demo page is run -->
+	<script type="text/javascript">
+		window.__unit = true;
+		window.__demo = false;
+	</script>
+
+	<!-- QUnit -->
+	<script src="components/qunit/qunit.js"></script>
+
+	<script>
+		// tell the QUnit not to autostart as we must wait for the module to be loaded
+		// by RequireJS
+		QUnit.config.autostart = false;
+	</script>
+
+	<!-- requireJS -->
+	<script type="text/javascript" data-main="main.js" src="components/requirejs/require.js"></script>
+	
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+</body>
+</html>

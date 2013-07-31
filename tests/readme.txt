@@ -1,0 +1,1 @@
+This directory holds all archives needed to test the "example" module.

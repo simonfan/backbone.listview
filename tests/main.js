@@ -8,7 +8,7 @@ require.config({
 		'backbone': 'components/backbone/backbone',
 
 		// the module files go here
-		'component': '../component',
+		'backbone.listview': '../backbone.listview',
 
 		// DEMO
 		'demo-main': 'demo',	// the main file for the demo

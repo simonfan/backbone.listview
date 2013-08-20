@@ -54,18 +54,24 @@ define(['backbone'], function(Backbone) {
 				// get the data for the template rendering
 				// if there is an itemData function set, use it. Otherwise just use the model's attributes.
 			var itemData = (typeof this.itemData === 'function') ? this.itemData(model) : model.attributes,
-				// render thumbnail
-				$thumb = $( this.itemTemplate(itemData) ),
+				// promise based render thumbnail
+				renderThumb = $.when(itemData).then(this.itemTemplate),
 				_this = this;
 
-			this.moment('beforeAdd', [$thumb, model])
-				.then(function() {
-					// append
-					$thumb.appendTo(_this.$el);
+			// wait for the thumbnail to be rendered to continue.
+			renderThumb.then(function(thumbHtml) {
 
-					// run after
-					_this.moment('afterAdd', [$thumb, model]);
-				});
+				var $thumb = $(thumbHtml);
+
+				_this.moment('beforeAdd', [$thumb, model])
+					.then(function() {
+						// append
+						$thumb.appendTo(_this.$el);
+
+						// run after
+						_this.moment('afterAdd', [$thumb, model]);
+					});
+			});
 		},
 
 		// handles reset events on the collection

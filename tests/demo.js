@@ -1,6 +1,6 @@
 define(['backbone.listview','backbone','jquery'], function(ListView, Backbone, $) {
 
-	var collection = new Backbone.Collection([
+	var collection = window.collection = new Backbone.Collection([
 		{ id: 1, name: 'apple' },
 		{ id: 2, name: 'banana' },
 		{ id: 3, name: 'pineapple' },
@@ -17,7 +17,7 @@ define(['backbone.listview','backbone','jquery'], function(ListView, Backbone, $
 		},
 
 		itemTemplate: function(data) {
-			return '<li> id: ' + data.id +' - ' + data.name +'</li>';
+			return '<li id="'+ data.id +'"> id: ' + data.id +' - ' + data.name +'</li>';
 		}
 	});
 

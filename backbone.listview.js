@@ -97,8 +97,7 @@ define(['backbone'], function(Backbone) {
 		 */
 		remove: function(model) {
 			// find the item to be removed
-			var selector = this.itemSelector(model),
-				$item = this.$el.find(selector),
+			var $item = this.retrieveElement(model),
 				_this = this;
 
 			this.moment('beforeRemove', [$item, model])
@@ -130,6 +129,20 @@ define(['backbone'], function(Backbone) {
 		itemSelector: function(model) {
 			return '#' + model.id;
 		},
+
+
+
+		/**
+		 * Method that retrieves the $el for a given backbone model.
+		 * Uses the 'itemSelector' method.
+		 */
+		retrieveElement: function(model) {
+			var selector = this.itemSelector(model),
+				$el = this.$el.find(selector);
+
+			return $el;
+		},
+
 	});
 
 	return ListView;

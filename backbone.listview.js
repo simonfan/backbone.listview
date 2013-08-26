@@ -11,7 +11,7 @@ define(['backbone'], function(Backbone) {
 			 *	- itemSelector: function that returns a selector used to find a specific item.
 			 */
 
-			_.bindAll(this, 'add','reset','remove','moment');
+			_.bindAll(this, 'add','reset','remove','moment','retrieveElement');
 
 			this.itemData = options.itemData || this.itemData;
 			this.itemTemplate = options.itemTemplate || this.itemTemplate;

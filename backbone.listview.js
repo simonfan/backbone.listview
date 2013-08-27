@@ -12,6 +12,7 @@ define(['backbone'], function(Backbone) {
 			 */
 
 			_.bindAll(this, 'add','reset','remove','moment','retrieveElement');
+			_.bindAll(this,'itemData','itemTemplate','itemSelector');
 
 			this.itemData = options.itemData || this.itemData;
 			this.itemTemplate = options.itemTemplate || this.itemTemplate;

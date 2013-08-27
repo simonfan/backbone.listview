@@ -30,21 +30,24 @@ define(['backbone'], function(Backbone) {
 			this.reset(this.collection, this.collection.models);
 		},
 
+		/**
+		 * Wraps the moment methods with promise-compliant
+		 */
 		moment: function(name, args) {
-			var moment = this.moments[ name ];
+			var moment = this[ name ];
 
 			return typeof moment === 'function' ? $.when( moment.apply(this, args) ) : $.when( true );
 		},
 
-		moments: {
-			beforeAdd: function($el, model) { $el.css('opacity', 0); },
-			afterAdd: function($el, model) { return $el.animate({ opacity: 1 }); },
-			beforeRemove: function($el, model) { return $el.animate({ opacity: 0 }); },
-		//	afterRemove: function(model) {},
-		//	beforeReset: function($el, collection) {},
-		//	afterReset: function($el, collection) {},
-		},
-
+		/**
+		 * moments
+		 */
+		beforeAdd: function(model, $el) { $el.css('opacity', 0); },
+		afterAdd: function(model, $el) { return $el.animate({ opacity: 1 }); },
+		beforeRemove: function(model, $el) { return $el.animate({ opacity: 0 }); },
+		afterRemove: function(model) {},
+		beforeReset: function(collection, $el) {},
+		afterReset: function(collection, $el) {},
 
 		/**
 		 * When models are added on the collection, 
@@ -63,13 +66,13 @@ define(['backbone'], function(Backbone) {
 
 				var $thumb = $(thumbHtml);
 
-				_this.moment('beforeAdd', [$thumb, model])
+				_this.moment('beforeAdd', [model, $thumb])
 					.then(function() {
 						// append
 						$thumb.appendTo(_this.$el);
 
 						// run after
-						_this.moment('afterAdd', [$thumb, model]);
+						_this.moment('afterAdd', [model, $thumb]);
 					});
 			});
 		},
@@ -79,13 +82,13 @@ define(['backbone'], function(Backbone) {
 
 			var _this = this;
 
-			this.moment('beforeReset', [this.$el, collection])
+			this.moment('beforeReset', [collection, this.$el])
 				.then(function() {
 					// remove all items from the list.
 					_this.$el.html('');
 
 					// run after
-					_this.moment('afterReset');
+					_this.moment('afterReset',[collection]);
 				});
 			
 			// add each of the models to the list.
@@ -100,7 +103,7 @@ define(['backbone'], function(Backbone) {
 			var $item = this.retrieveElement(model),
 				_this = this;
 
-			this.moment('beforeRemove', [$item, model])
+			this.moment('beforeRemove', [model, $item])
 				.then(function() {
 					$item.remove();
 
